@@ -32,8 +32,28 @@ const upload = multer({
 
 const uploadImg = {
   singleUpload: (req, res, next) => {
-    const singleUpload = upload.single("image");
+    const singleUpload = upload.single('image');
     singleUpload(req, res, (err) => {
+      if (err) {
+        res.json({
+          msg: err,
+        });
+      } else {
+        // req.body.image = `${process.env.URL_LOCAL}images/${req.file.filename}`;
+        // next();
+        try {
+          req.body.image = req.file.filename;
+        } catch {
+          err;
+        } finally {
+          next();
+        }
+      }
+    });
+  },
+  multipleUpload: (req, res, next) => {
+    const multipleUpload = upload.array('image', 4);
+    multipleUpload(req, res, (err) => {
       if (err) {
         res.json({
           msg: err,
