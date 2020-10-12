@@ -7,7 +7,7 @@ const productController = require("../Controllers/product");
 
 const productRouter = express.Router();
 
-productRouter.post("/product", uploadImg.singleUpload, productController.uploadProduct);
+productRouter.post("/product", uploadImg.multipleUpload, productController.uploadProduct);
 productRouter.get("/product/new", productController.getNewProduct);
 productRouter.get("/product/popular", productController.getPopularProduct);
 productRouter.get("/product", productController.getProductByCategory);

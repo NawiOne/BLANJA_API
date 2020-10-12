@@ -54,15 +54,18 @@ const uploadImg = {
   multipleUpload: (req, res, next) => {
     const multipleUpload = upload.array('image', 4);
     multipleUpload(req, res, (err) => {
+     
       if (err) {
         res.json({
           msg: err,
         });
       } else {
-        // req.body.image = `${process.env.URL_LOCAL}images/${req.file.filename}`;
-        // next();
         try {
-          req.body.image = req.file.filename;
+          const image = req.files.map(file =>{
+            return file.filename
+          })
+          req.body.image = image.join(',');
+          // console.log(req.files.filename)
         } catch {
           err;
         } finally {

@@ -7,6 +7,7 @@ const productController = {
     productModel
       .uploadProduct(req.body)
       .then((data) => {
+        // console.log(typeof(req.files))
         const responData={
           ...req.body,
           msg:'Upload Product Success'

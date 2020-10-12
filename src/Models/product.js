@@ -5,7 +5,7 @@ const productModel = {
  uploadProduct:(body)=>{
      const {name_product, price, stock, product_condition, image,description, category} = body
      return new Promise((resolve, reject)=>{
-         const qs = `INSERT INTO products SET name_product =? , price=?, stock=? , product_condition=?, image=?, category=?, description=?, upload_at= NOW()`
+         const qs = `INSERT INTO products SET name_product =?, price=?, stock=? , product_condition=?, image=?, category=?, description=?, upload_at= NOW()`
         db.query(qs, [name_product, price, stock, product_condition, image, category, description], (err, data)=>{
             if(err){
                 reject(err)
