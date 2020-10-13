@@ -68,7 +68,7 @@ const authModel = {
           reject(err);
         }
         if (!data.length) {
-          reject("User Not Found");
+          reject({ msg: "Wrong Password" });
         } else {
           bcrypt.compare(body.password, data[0].password, (err, result) => {
             if (result) {
