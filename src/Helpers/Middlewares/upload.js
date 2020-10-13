@@ -62,7 +62,7 @@ const uploadImg = {
           const image = req.files.map(file =>{
             return file.filename
           })
-          req.body.image = image.join(',');
+          req.body.image = `http://localhost:8000/images/${image.join(',')}`;
         } catch {
           err;
         } finally {
