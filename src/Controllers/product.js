@@ -30,9 +30,9 @@ const productController = {
   },
   getPopularProduct: (req, res) => {
     productModel
-      .getPopularProduct()
+      .getPopularProduct(req.query)
       .then((data) => {
-        formResponse.succes(res, data);
+        formResponse.pagination(req, res, data);
       })
       .catch((err) => {
         formResponse.error(res, err);
