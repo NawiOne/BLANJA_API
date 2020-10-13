@@ -16,11 +16,11 @@ const formResponse = {
     res.json(responseObject);
   },
   pagination: ({ query }, res, data) => {
-    const page = parseInt(query.page);
-    const limit = parseInt(query.limit);
+    const page = Number(query.page);
+    const limit = Number(query.limit);
     const prevPage =
-      page === 1 ? "" : `/pagination?page=${page - 1}&limit=${limit}`;
-    const nextPage = `/pagination?page=${page + 1}&limit=${limit}`;
+      page === 1 ? "" : `/product/new?page=${page - 1}&limit=${limit}`;
+    const nextPage = `/product/new?page=${page + 1}&limit=${limit}`;
 
     const responseObject = {
       success: true,
