@@ -34,6 +34,19 @@ const transactionModel = {
         })
      })     
      },
+     getAllItem:(query)=>{
+        return new Promise((resolve, reject)=>{
+            const qs = `SELECT name_product, brand, price, image, color, product_condition, description FROM products JOIN 
+            WHERE product_id = ${query.product_id}`
+           db.query(qs, (err, data)=>{
+               if(err){
+                   reject(err)
+               }else{
+                   resolve(data)
+               }
+           })
+        })     
+    },
 };
 
 module.exports = transactionModel;
