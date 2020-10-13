@@ -36,7 +36,7 @@ const transactionModel = {
      },
      getAllItemSeller:(query)=>{
         return new Promise((resolve, reject)=>{
-            const qs = `SELECT products.name_product, products.brand, products.price, products.image, trans_item.color, trans_item.size, trans_item.qty FROM products JOIN trans_item ON product.id = trans_item.product_id JOIN transaction ON  WHERE transaction.seller_id = ${query.seller_id}`
+            const qs = `SELECT products.name_product, products.brand, products.price, products.image, trans_item.color, trans_item.size, trans_item.qty FROM products JOIN trans_item ON products.id = trans_item.product_id JOIN transaction ON trans_item.transaction_id = transaction.id  WHERE transaction.seller_id = ${query.seller_id}`
            db.query(qs, (err, data)=>{
                if(err){
                    reject(err)
