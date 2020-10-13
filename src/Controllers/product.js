@@ -68,6 +68,7 @@ const productController = {
         formResponse.error(res, err);
       });
   },
+  
 };
 
 module.exports = productController;
