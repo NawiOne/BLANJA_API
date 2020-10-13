@@ -32,43 +32,24 @@ const authModel = {
                 level_id: level_id,
                 email: email,
                 password: hashedPassword,
+                store_name: store_name,
+                phone_number: phone_number,
+                image: 'user.png',
               };
               const queryString = "INSERT INTO users SET ?";
               db.query(queryString, newBody, (err, data) => {
                 if (!err) {
-                  const newData = {
-                    user_id: data.insertId,
-                    phone_number: phone_number,
-                    image_user: "user.png",
-                    store_name: store_name,
+                  const payload = {
+                    username: username,
+                    password: hashedPassword,
+                    level_id: level_id,
                   };
-                  const QS = "INSERT INTO user_detail SET ?";
-                  db.query(QS, newData, (err, data) => {
-                    if (!err) {
-                      const payload = {
-                        username: username,
-                        password: hashedPassword,
-                        level_id: level_id,
-                      };
-                      const token = jwt.sign(payload, process.env.SECRET_KEY, {
-                        expiresIn: "6h",
-                      });
-                      const user_id = newData.user_id;
-                      const msg = "Register Success";
-                      resolve({ msg, token, user_id });
-                    } else {
-                      reject(err);
-                    }
+                  const token = jwt.sign(payload, process.env.SECRET_KEY, {
+                    expiresIn: "6h",
                   });
-                  //   const payload = {
-                  //     newBody,
-                  //   };
-                  //   const token = jwt.sign(payload, process.env.SECRET_KEY, {
-                  //     expiresIn: "6h",
-                  //   });
-                  //   const id_user = data.insertId;
-                  //   const msg = "Register Success";
-                  //   resolve({ msg, token, id_user });
+                  const user_id = data.insertId;
+                  const msg = "Register Success";
+                  resolve({ msg, token, user_id, level_id });
                 } else {
                   reject(err);
                 }
@@ -94,16 +75,13 @@ const authModel = {
               const { email } = body;
               const {
                 id_user,
-                password,
-                username,
-                image,
-                pin,
-                no_hp,
-                amount,
+                level_id,
+                password
               } = data[0];
               const payload = {
                 email,
                 password,
+                level_id,
               };
               const token = jwt.sign(payload, process.env.SECRET_KEY, {
                 expiresIn: "6h",
@@ -113,12 +91,7 @@ const authModel = {
                 msg,
                 token,
                 id_user,
-                username,
-                image,
-                pin,
-                no_hp,
-                amount,
-                email,
+                level_id
               });
             }
             if (!result) {
@@ -134,21 +107,21 @@ const authModel = {
   },
   changePassword: (body) => {
     return new Promise((resolve, reject) => {
-      const qs = "SELECT email FROM users WHERE email = ?";
-      db.query(qs, [body.email], (err, data) => {
+      const qs = "SELECT email FROM users WHERE id_user = ?";
+      db.query(qs, [body.id_user], (err, data) => {
         if (data.length) {
           bcrypt.genSalt(10, (err, salt) => {
             if (err) {
               reject(err);
             }
-            const { password, email } = body;
+            const { password, id_user } = body;
             bcrypt.hash(password, salt, (err, hashedPassword) => {
               if (err) {
                 reject(err);
               }
               const queryString =
-                "UPDATE users SET password= ? WHERE email = ?";
-              db.query(queryString, [hashedPassword, email], (err, data) => {
+                "UPDATE users SET password= ? WHERE id_user = ?";
+              db.query(queryString, [hashedPassword, id_user], (err, data) => {
                 if (!err) {
                   resolve({ msg: "change password success" });
                 } else {
@@ -158,37 +131,23 @@ const authModel = {
             });
           });
         } else {
-          reject(err);
+          reject({msg: 'user not found'});
         }
       });
     });
   },
   sendEmail: (body) => {
     return new Promise((resolve, reject) => {
-      const otp = Math.floor(1000 + Math.random() * 900000);
-      const queryString = "SELECT email, code FROM code_otp WHERE email = ?";
+      const queryString = "SELECT id_user, email FROM users WHERE email = ?";
       db.query(queryString, [body.email], (err, data) => {
         if (err) {
           reject(err);
         }
         if (data.length) {
-          const Qs = `UPDATE code_otp SET code = ${otp} Where email = ? `;
-          db.query(Qs, [body.email], (err, data) => {
-            if (!err) {
-              resolve({ sendOTP: "success", code: otp });
-            } else {
-              reject(err);
-            }
-          });
+          const link = `http://localhost:3000/Confirmation-password?id_user=${data[0].id_user}`
+          resolve({email: data[0].email, link: link })
         } else {
-          const Qstr = `INSERT INTO code_otp SET email = ?, code= ?`;
-          db.query(Qstr, [body.email, otp], (err, data) => {
-            if (!err) {
-              resolve({ sendOTP: "success", code: otp });
-            } else {
-              reject(err);
-            }
-          });
+            reject({msg: 'data not found'});
         }
       });
     });

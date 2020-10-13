@@ -40,16 +40,16 @@ const authController = {
         var transporter = nodemailer.createTransport({
           service: "gmail",
           auth: {
-            user: "nendyyusup79@gmail.com",
-            pass: "963258741Nendy",
+            user: "blanjaarkademy@gmail.com",
+            pass: "Blanja2020",
           },
         });
 
         var mailOptions = {
-          from: "nendyyusup79@gmail.com",
-          to: "yusup.junaedi97@gmail.com",
-          subject: "OTP Reset Password",
-          text: `Code OTP ${data.code}`,
+          from: "blanjaarkademy@gmail.com",
+          to: data.email,
+          subject: "Reset Password",
+          text: `Link to reset password : ${data.link}`,
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
