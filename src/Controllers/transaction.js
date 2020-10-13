@@ -32,6 +32,16 @@ const transactionController = {
         formResponse.error(res, err);
       });
   },
+  getAllItemSeller: (req, res) => {
+    transactionModel
+      .getAllItemSeller(req.query)
+      .then((data) => {
+        formResponse.succes(res, data);
+      })
+      .catch((err) => {
+        formResponse.error(res, err);
+      });
+  },
 };
 
 module.exports = transactionController;

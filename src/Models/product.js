@@ -73,7 +73,7 @@ const productModel = {
     },
     getProductDetail:(query)=>{
         return new Promise((resolve, reject)=>{
-            const qs = `SELECT id, name_product, brand, price, image, color, product_condition, description FROM products WHERE product_id = ${query.product_id}`
+            const qs = `SELECT id, name_product, brand, price, image, color, product_condition, description FROM products WHERE id = ${query.id}`
            db.query(qs, (err, data)=>{
                if(err){
                    reject(err)

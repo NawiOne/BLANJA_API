@@ -34,10 +34,9 @@ const transactionModel = {
         })
      })     
      },
-     getAllItem:(query)=>{
+     getAllItemSeller:(query)=>{
         return new Promise((resolve, reject)=>{
-            const qs = `SELECT name_product, brand, price, image, color, product_condition, description FROM products JOIN 
-            WHERE product_id = ${query.product_id}`
+            const qs = `SELECT products.name_product, products.brand, products.price, products.image, trans_item.color, trans_item.size, trans_item.qty FROM products JOIN trans_item ON product.id = trans_item.product_id JOIN transaction ON  WHERE transaction.seller_id = ${query.seller_id}`
            db.query(qs, (err, data)=>{
                if(err){
                    reject(err)
