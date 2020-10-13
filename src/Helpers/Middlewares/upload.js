@@ -39,8 +39,6 @@ const uploadImg = {
           msg: err,
         });
       } else {
-        // req.body.image = `${process.env.URL_LOCAL}images/${req.file.filename}`;
-        // next();
         try {
           req.body.image = req.file.filename;
         } catch {
@@ -65,7 +63,6 @@ const uploadImg = {
             return file.filename
           })
           req.body.image = image.join(',');
-          // console.log(req.files.filename)
         } catch {
           err;
         } finally {

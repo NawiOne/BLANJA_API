@@ -9,9 +9,10 @@ const transactionController = {
       .then((data) => {
         const responData={
           ...req.body,
+          id:data.insertId,
           msg:'Transaction Success'
         }
-        formResponse.succes(res, data);
+        formResponse.succes(res, responData);
       })
       .catch((err) => {
         formResponse.error(res, err);
