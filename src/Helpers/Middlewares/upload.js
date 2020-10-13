@@ -32,7 +32,7 @@ const upload = multer({
 
 const uploadImg = {
   singleUpload: (req, res, next) => {
-    const singleUpload = upload.single("image");
+    const singleUpload = upload.single('image');
     singleUpload(req, res, (err) => {
       if (err) {
         res.json({
@@ -43,6 +43,29 @@ const uploadImg = {
         // next();
         try {
           req.body.image = req.file.filename;
+        } catch {
+          err;
+        } finally {
+          next();
+        }
+      }
+    });
+  },
+  multipleUpload: (req, res, next) => {
+    const multipleUpload = upload.array('image', 4);
+    multipleUpload(req, res, (err) => {
+     
+      if (err) {
+        res.json({
+          msg: err,
+        });
+      } else {
+        try {
+          const image = req.files.map(file =>{
+            return file.filename
+          })
+          req.body.image = image.join(',');
+          // console.log(req.files.filename)
         } catch {
           err;
         } finally {
