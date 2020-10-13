@@ -5,12 +5,11 @@ const transactionModel = {
  transaction:(body)=>{
      const {customer_id, seller_id, address, amount, payment, product} = body
      return new Promise((resolve, reject)=>{
-        // resolve(body)
-         const qs = `INSERT INTO transaction SET customer_id=?, seller_id=?, address=?, amount=?, payment=?, date= NOW();INSERT INTO trans_item (LAST_INSERT_ID(), product_id, color, size, qty) VALUES=? `
+         const qs = `INSERT INTO transaction SET customer_id=?, seller_id=?, address=?, amount=?, payment=?, date= NOW();INSERT INTO trans_item (product_id, color, size, qty) VALUES? `
          const query = product.map(item =>{
-             return [LAST_INSERT_ID(), item.product_id, item.color, item.size, item.qty]
+             return [item.product_id, item.color, item.size, item.qty]
          })
-        //  console.log(body)
+         console.log(query)
         db.query(qs, [customer_id, seller_id, address, amount, payment, query], (err, data)=>{
            
             if(!err){
