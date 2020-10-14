@@ -47,9 +47,9 @@ const authModel = {
                   const token = jwt.sign(payload, process.env.SECRET_KEY, {
                     expiresIn: "6h",
                   });
-                  const user_id = data.insertId;
+                  const id_user = data.insertId;
                   const msg = "Register Success";
-                  resolve({ msg, token, user_id, level_id });
+                  resolve({ msg, token, id_user, level_id });
                 } else {
                   reject(err);
                 }

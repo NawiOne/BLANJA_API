@@ -4,7 +4,7 @@ const authModel = {
   getDataUser: (id) => {
     return new Promise((resolve, reject) => {
       const queryString =
-        "SELECT users.id_user, users.username, users.level_id, users.email, users.phone_number, users.store_name, users.image, users.gender_id, users.date_of_Birth, users.address FROM users WHERE id_user = ?";
+        "SELECT users.id_user, users.username, users.level_id, users.email, users.phone_number, users.store_name, users.image, genders.gender, users.date_of_Birth, users.desc_store, users.address FROM users Join genders on users.gender_id = genders.id WHERE id_user = ?";
       db.query(queryString, [id], (err, data) => {
         if (!err) {
           resolve(data);
