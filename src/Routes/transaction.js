@@ -10,5 +10,6 @@ const transactionRouter = express.Router();
 transactionRouter.post("/transaction", transactionController.transaction);
 transactionRouter.patch("/addAddress", transactionController.addAddress);
 transactionRouter.get("/history/seller", transactionController.getAllItemSeller);
+transactionRouter.get("/history/customer", transactionController.getAllItemCustomer);
 
 module.exports = transactionRouter;
