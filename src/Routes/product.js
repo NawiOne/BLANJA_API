@@ -14,5 +14,6 @@ productRouter.get("/product/category", productController.getProductByCategory);
 productRouter.get("/product/detail", productController.getProductDetail);
 productRouter.get("/product", productController.searchProduct);
 productRouter.get("/product/popular", productController.getPopularProduct);
+productRouter.get("/product/seller", productController.getSellerProduct);
 
 module.exports = productRouter;

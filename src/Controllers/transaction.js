@@ -18,9 +18,23 @@ const transactionController = {
         formResponse.error(res, err);
       });
   },
-  addAddress: (req, res) => {
+  changeAddress: (req, res) => {
     transactionModel
-      .addAddress(req.body)
+      .changeAddress(req.body, req.query)
+      .then((data) => {
+        const responData={
+          ...req.body,
+          msg:'update Address Success'
+        }
+        formResponse.succes(res, responData);
+      })
+      .catch((err) => {
+        formResponse.error(res, err);
+      });
+  },
+  newAddress: (req, res) => {
+    transactionModel
+      .newAddress(req.body)
       .then((data) => {
         const responData={
           ...req.body,
@@ -32,9 +46,29 @@ const transactionController = {
         formResponse.error(res, err);
       });
   },
+  getAddress: (req, res) => {
+    transactionModel
+      .getAddress(req.query)
+      .then((data) => {
+        formResponse.succes(res, data);
+      })
+      .catch((err) => {
+        formResponse.error(res, err);
+      });
+  },
   getAllItemSeller: (req, res) => {
     transactionModel
       .getAllItemSeller(req.query)
+      .then((data) => {
+        formResponse.succes(res, data);
+      })
+      .catch((err) => {
+        formResponse.error(res, err);
+      });
+  },
+  getAllItemCustomer: (req, res) => {
+    transactionModel
+      .getAllItemCustomer(req.query)
       .then((data) => {
         formResponse.succes(res, data);
       })

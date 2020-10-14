@@ -68,6 +68,16 @@ const productController = {
         formResponse.error(res, err);
       });
   },
+  getSellerProduct: (req, res) => {
+    productModel
+      .getSellerProduct(req.query)
+      .then((data) => {
+        formResponse.pagination(req, res, data);
+      })
+      .catch((err) => {
+        formResponse.error(res, err);
+      });
+  },
   
 };
 
