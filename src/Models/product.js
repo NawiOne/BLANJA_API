@@ -3,10 +3,10 @@ const db = require("../Configs/dbMySql");
 
 const productModel = {
  uploadProduct:(body)=>{
-     const {name_product, price, stock, product_condition, image,description, category} = body
+     const {name_product, brand, price, stock, product_condition, image,description, category} = body
      return new Promise((resolve, reject)=>{
-         const qs = `INSERT INTO products SET name_product =?, price=?, stock=? , product_condition=?, image=?, category=?, description=?, upload_at= NOW()`
-        db.query(qs, [name_product, price, stock, product_condition, image, category, description], (err, data)=>{
+         const qs = `INSERT INTO products SET name_product =?, brand=? price=?, stock=? , product_condition=?, image=?, category=?, description=?, upload_at= NOW()`
+        db.query(qs, [name_product, brand, price, stock, product_condition, image, category, description], (err, data)=>{
             if(err){
                 reject(err)
             }else{
@@ -33,7 +33,7 @@ const productModel = {
     },
     getPopularProduct:()=>{
         return new Promise((resolve, reject)=>{
-            const qs = `SELECT  name_product , price, brand, image FROM products ORDER BY upload_at DESC`
+            const qs = `SELECT  name_product , price, brand, image FROM products JOIN trans_item ON products.id = trans_item.product_id ORDER BY SUM(product_id) DESC`
            db.query(qs, (err, data)=>{
                if(err){
                    reject(err)
@@ -80,6 +80,7 @@ const productModel = {
            })
         })     
     },
+
 
 };
 
