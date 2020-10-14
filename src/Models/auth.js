@@ -34,6 +34,7 @@ const authModel = {
                 password: hashedPassword,
                 store_name: store_name,
                 phone_number: phone_number,
+                gender_id: 3,
                 image: 'user.png',
               };
               const queryString = "INSERT INTO users SET ?";
