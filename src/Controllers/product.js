@@ -42,7 +42,7 @@ const productController = {
     productModel
       .getProductByCategory(req.query)
       .then((data) => {
-        formResponse.succes(res, data);
+        formResponse.pagination(req, res, data);
       })
       .catch((err) => {
         formResponse.error(res, err);
