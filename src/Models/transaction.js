@@ -3,15 +3,15 @@ const db = require("../Configs/dbMySql");
 
 const transactionModel = {
  transaction:(body)=>{
-     const {id, customer_id, seller_id, address, amount, payment, product} = body
+     const {invoice, customer_id, seller_id, address, amount, payment, product} = body
      return new Promise((resolve, reject)=>{
-         const qs = `INSERT INTO transaction SET customer_id=?, seller_id=?, address=?, amount=?, payment=?, date= NOW();
-         INSERT INTO trans_item (transaction_id, product_id, color, size, qty) VALUES?`
+         const qs = `INSERT INTO transaction SET invoice=?, customer_id=?, seller_id=?, address=?, amount=?, payment=?, date= NOW();
+         INSERT INTO trans_item (invoice_id, product_id, color, size, qty) VALUES?`
          const query = product.map(item =>{
-             return [id, item.product_id, item.color, item.size, item.qty]
+             return [invoice, item.product_id, item.color, item.size, item.qty]
          })
          console.log(query)
-        db.query(qs, [customer_id, seller_id, address, amount, payment, query], (err, data)=>{
+        db.query(qs, [invoice,customer_id, seller_id, address, amount, payment, query], (err, data)=>{
             if(!err){
                 resolve(data)
             }else{
@@ -62,7 +62,7 @@ const transactionModel = {
      },
      getAllItemSeller:(query)=>{
         return new Promise((resolve, reject)=>{
-            const qs = `SELECT products.name_product, products.brand, products.price, products.image, trans_item.color, trans_item.size, trans_item.qty FROM products JOIN trans_item ON products.id = trans_item.product_id JOIN transaction ON trans_item.transaction_id = transaction.id  WHERE transaction.seller_id = ${query.id}`
+            const qs = `SELECT  products.name_product, products.brand, products.price, products.image, trans_item.color, trans_item.size, trans_item.qty FROM products JOIN trans_item ON products.id = trans_item.product_id JOIN transaction ON trans_item.invoice_id = transaction.invoice  WHERE transaction.seller_id = ${query.id}`
            db.query(qs, (err, data)=>{
                if(err){
                    reject(err)
@@ -74,7 +74,7 @@ const transactionModel = {
     },
     getAllItemCustomer:(query)=>{
         return new Promise((resolve, reject)=>{
-            const qs = `SELECT products.name_product, products.brand, products.price, products.image, trans_item.color, trans_item.size, trans_item.qty FROM products JOIN trans_item ON products.id = trans_item.product_id JOIN transaction ON trans_item.transaction_id = transaction.id  WHERE transaction.customer_id = ${query.id}`
+            const qs = `SELECT products.name_product, products.brand, products.price, products.image, trans_item.color, trans_item.size, trans_item.qty FROM products JOIN trans_item ON products.id = trans_item.product_id JOIN transaction ON trans_item.invoice_id = transaction.invoice  WHERE transaction.customer_id = ${query.id}`
            db.query(qs, (err, data)=>{
                if(err){
                    reject(err)
