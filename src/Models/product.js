@@ -21,7 +21,7 @@ const productModel = {
          const limit = query.limit
          const offset = (page - 1)*limit
         return new Promise((resolve, reject)=>{
-            const qs = `SELECT  id, name_product , price, brand, image FROM products ORDER BY upload_at DESC LIMIT ? OFFSET ?`
+            const qs = `SELECT  id, seller_id, name_product , price, brand, image FROM products ORDER BY upload_at DESC LIMIT ? OFFSET ?`
            db.query(qs, [Number(limit), offset], (err, data)=>{
                if(err){
                    reject(err)
@@ -36,7 +36,7 @@ const productModel = {
         const limit = query.limit
         const offset = (page - 1)*limit
         return new Promise((resolve, reject)=>{
-           const qs =`SELECT id, products.name_product, products.brand, products.price, products.image FROM products JOIN trans_item ON products.id = trans_item.product_id GROUP BY trans_item.product_id ORDER BY SUM(trans_item.qty) DESC LIMIT ? OFFSET ?`
+           const qs =`SELECT id, seller_id, products.name_product, products.brand, products.price, products.image FROM products JOIN trans_item ON products.id = trans_item.product_id GROUP BY trans_item.product_id ORDER BY SUM(trans_item.qty) DESC LIMIT ? OFFSET ?`
            db.query(qs, [Number(limit), offset],(err, data)=>{
                if(err){
                    reject(err)
@@ -48,7 +48,7 @@ const productModel = {
     },
     getProductByCategory:(query)=>{
         return new Promise((resolve, reject)=>{
-            const qs = `SELECT id, name_product, price, brand, image FROM products WHERE category LIKE '%${query.category}%'`
+            const qs = `SELECT id, seller_id, name_product, price, brand, image FROM products WHERE category LIKE '%${query.category}%'`
             console.log(query.category)
            db.query(qs, (err, data)=>{
                if(err){
@@ -61,7 +61,7 @@ const productModel = {
     },
     searchProduct:(query)=>{
         return new Promise((resolve, reject)=>{
-            const qs = `SELECT id, name_product, price, brand, image FROM products WHERE name_product LIKE '%${query.search}%' ORDER BY price  ${query.filter}`
+            const qs = `SELECT id, seller_id, name_product, price, brand, image FROM products WHERE name_product LIKE '%${query.search}%' ORDER BY price  ${query.filter}`
            db.query(qs, (err, data)=>{
                if(err){
                    reject(err)
@@ -73,7 +73,7 @@ const productModel = {
     },
     getProductDetail:(query)=>{
         return new Promise((resolve, reject)=>{
-            const qs = `SELECT id, name_product, brand, price, image, color, product_condition, description FROM products WHERE id = ${query.id}`
+            const qs = `SELECT id, seller_id, name_product, brand, price, image, color, product_condition, description FROM products WHERE id = ${query.id}`
            db.query(qs, (err, data)=>{
                if(err){
                    reject(err)
@@ -88,7 +88,7 @@ const productModel = {
         const limit = query.limit
         const offset = (page - 1)*limit
        return new Promise((resolve, reject)=>{
-           const qs = `SELECT  id, name_product , price, brand, image FROM products WHERE seller_id= ${query.seller_id} ORDER BY price DESC LIMIT ? OFFSET ?`
+           const qs = `SELECT  id, seller_id, name_product , price, brand, image FROM products WHERE seller_id= ${query.seller_id} ORDER BY price DESC LIMIT ? OFFSET ?`
           db.query(qs, [Number(limit), offset], (err, data)=>{
               if(err){
                   reject(err)

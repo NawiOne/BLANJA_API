@@ -43,7 +43,6 @@ const transactionModel = {
                 reject(err)
             }else{
                 resolve(data)
-                console.log(data)
             }
         })
      })     
