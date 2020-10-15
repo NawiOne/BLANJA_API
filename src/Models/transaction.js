@@ -20,16 +20,43 @@ const transactionModel = {
         })
      })     
      },
-    addAddress:(body)=>{
+    changeAddress:(body, query)=>{
+        const {save_address, receipt_name, telephone_number, address, postal_code, city_or_subdistric, user_id, id_address} = body
+     return new Promise((resolve, reject)=>{
+         const qs = `UPDATE address_tb SET save_address=?, receipt_name=?, telephone_number=?, address=?, postal_code=?, city_or_subdistric=? WHERE user_id=${query.user_id} AND id_address=${query.id_address}`
+        db.query(qs, [save_address, receipt_name, telephone_number, address, postal_code, city_or_subdistric], (err, data)=>{
+            if(err){
+                reject(err)
+            }else{
+                resolve(data)
+                console.log(data)
+            }
+        })
+     })     
+     },
+     newAddress:(body)=>{
         const {save_address, receipt_name, telephone_number, address, postal_code, city_or_subdistric, user_id} = body
      return new Promise((resolve, reject)=>{
-         const qs = `UPDATE address_tb SET save_address=?, receipt_name=?, telephone_number=?, address=?, postal_code=?, city_or_subdistric=? WHERE user_id=?`
+         const qs = `INSERT INTO address_tb SET save_address=?, receipt_name=?, telephone_number=?, address=?, postal_code=?, city_or_subdistric=?, user_id=? `
         db.query(qs, [save_address, receipt_name, telephone_number, address, postal_code, city_or_subdistric, user_id], (err, data)=>{
             if(err){
                 reject(err)
             }else{
                 resolve(data)
                 console.log(data)
+            }
+        })
+     })     
+     },
+     getAddress:(query)=>{
+     return new Promise((resolve, reject)=>{
+         const qs = `SELECT id_address, save_address, receipt_name, telephone_number, address, postal_code, city_or_subdistric FROM address_tb WHERE user_id= ${query.user_id} `
+        db.query(qs,  (err, data)=>{
+            if(err){
+                reject(err)
+            }else{
+                resolve(data)
+               
             }
         })
      })     

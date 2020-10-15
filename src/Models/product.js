@@ -83,6 +83,21 @@ const productModel = {
            })
         })     
     },
+    getSellerProduct:(query)=>{
+        const page = query.page
+        const limit = query.limit
+        const offset = (page - 1)*limit
+       return new Promise((resolve, reject)=>{
+           const qs = `SELECT  id, name_product , price, brand, image FROM products WHERE seller_id= ${query.seller_id} ORDER BY price DESC LIMIT ? OFFSET ?`
+          db.query(qs, [Number(limit), offset], (err, data)=>{
+              if(err){
+                  reject(err)
+              }else{
+                  resolve(data)
+              }
+          })
+       })     
+   },
 
 
 };
