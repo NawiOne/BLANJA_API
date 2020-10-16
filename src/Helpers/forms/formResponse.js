@@ -20,7 +20,7 @@ const formResponse = {
     const limit = Number(query.limit);
     const prevPage =
       page === 1 ? "" : `/product/new?page=${page - 1}&limit=${limit}`;
-    const nextPage = `/product/new?page=${page + 1}&limit=${limit}`;
+    const nextPage = data.length < limit? '' :`/product/new?page=${page + 1}&limit=${limit}`;
 
     const responseObject = {
       success: true,
