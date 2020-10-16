@@ -7,7 +7,6 @@ const productController = {
     productModel
       .uploadProduct(req.body)
       .then((data) => {
-        // console.log(typeof(req.files))
         const responData={
           ...req.body,
           msg:'Upload Product Success'
@@ -22,7 +21,7 @@ const productController = {
     productModel
       .getNewProduct(req.query)
       .then((data) => {
-        formResponse.pagination(req, res, data);
+        formResponse.succes( res, data);
       })
       .catch((err) => {
         formResponse.error(res, err);
@@ -32,7 +31,7 @@ const productController = {
     productModel
       .getPopularProduct(req.query)
       .then((data) => {
-        formResponse.pagination(req, res, data);
+        formResponse.succes(res, data);
       })
       .catch((err) => {
         formResponse.error(res, err);
@@ -42,7 +41,7 @@ const productController = {
     productModel
       .getProductByCategory(req.query)
       .then((data) => {
-        formResponse.pagination(req, res, data);
+        formResponse.categoryPagination(req, res, data);
       })
       .catch((err) => {
         formResponse.error(res, err);
