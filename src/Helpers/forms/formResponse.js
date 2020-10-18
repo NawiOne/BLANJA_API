@@ -60,9 +60,10 @@ const formResponse = {
   pagination: ({ query }, res, data) => {
     const page = Number(query.page);
     const limit = Number(query.limit);
+    const search = query.search
     const prevPage =
-      page === 1 ? "" : `/product/popular?page=${page - 1}&limit=${limit}`;
-    const nextPage = data.length < limit? '' :`/product/popular?page=${page + 1}&limit=${limit}`;
+      page === 1 ? "" : `/product?search=${search}&page=${page - 1}&limit=${limit}`;
+    const nextPage = data.length < limit? '' :`/product?search=${search}&page=${page - 1}&limit=${limit}`;
 
     const responseObject = {
       success: true,
