@@ -66,7 +66,7 @@ const productModel = {
         const limit = query.limit
         const offset = (page - 1)*limit
         return new Promise((resolve, reject)=>{
-            const qs = `SELECT id, seller_id, name_product, price, brand, image FROM products WHERE name_product LIKE '%${query.search}%' ORDER BY price ${query.filter} LIMIT ? OFFSET ?`
+            const qs = `SELECT id, seller_id, name_product, price, brand, image FROM products WHERE name_product LIKE '%${query.search}%' OR brand LIKE '%${query.search}%' ORDER BY price ${query.filter} LIMIT ? OFFSET ?`
            db.query(qs, [Number(limit), offset], (err, data)=>{
                if(err){
                    reject(err)
