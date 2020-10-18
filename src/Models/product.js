@@ -62,9 +62,12 @@ const productModel = {
         })     
     },
     searchProduct:(query)=>{
+        const page = query.page
+        const limit = query.limit
+        const offset = (page - 1)*limit
         return new Promise((resolve, reject)=>{
-            const qs = `SELECT id, seller_id, name_product, price, brand, image FROM products WHERE name_product LIKE '%${query.search}%' ORDER BY price  ${query.filter}`
-           db.query(qs, (err, data)=>{
+            const qs = `SELECT id, seller_id, name_product, price, brand, image FROM products WHERE name_product LIKE '%${query.search}%' LIMIT ? OFFSET ?`
+           db.query(qs, [Number(limit), offset], (err, data)=>{
                if(err){
                    reject(err)
                }else{
