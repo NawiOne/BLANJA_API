@@ -3,15 +3,13 @@ const db = require("../Configs/dbMySql");
 
 const productModel = {
  uploadProduct:(body)=>{
-     const {name_product, brand, price, stock, product_condition, image,description, category} = body
      return new Promise((resolve, reject)=>{
-         const qs = `INSERT INTO products SET name_product =?, brand=?, price=?, stock=? , product_condition=?, image=?, category=?, description=?, upload_at= NOW()`
-        db.query(qs, [name_product, brand, price, stock, product_condition, image, category, description], (err, data)=>{
+         const qs = `INSERT INTO products SET ?`
+        db.query(qs, [body], (err, data)=>{
             if(err){
                 reject(err)
             }else{
                 resolve(data)
-                console.log(data)
             }
         })
      })     
