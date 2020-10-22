@@ -10,7 +10,6 @@ const productModel = {
                 reject(err)
             }else{
                 resolve(data)
-                console.log(data)
             }
         })
      })     
