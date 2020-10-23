@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Okt 2020 pada 15.19
--- Versi server: 10.4.13-MariaDB
--- Versi PHP: 7.2.31
+-- Generation Time: Oct 23, 2020 at 08:25 AM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 7.4.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `blanja_db`
+-- Database: `blblanja_db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `address_tb`
+-- Table structure for table `address_tb`
 --
 
 CREATE TABLE `address_tb` (
@@ -39,7 +39,7 @@ CREATE TABLE `address_tb` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `address_tb`
+-- Dumping data for table `address_tb`
 --
 
 INSERT INTO `address_tb` (`id_address`, `user_id`, `save_address`, `receipt_name`, `telephone_number`, `address`, `postal_code`, `city_or_subdistric`) VALUES
@@ -54,7 +54,7 @@ INSERT INTO `address_tb` (`id_address`, `user_id`, `save_address`, `receipt_name
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `genders`
+-- Table structure for table `genders`
 --
 
 CREATE TABLE `genders` (
@@ -63,7 +63,7 @@ CREATE TABLE `genders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `genders`
+-- Dumping data for table `genders`
 --
 
 INSERT INTO `genders` (`id`, `gender`) VALUES
@@ -74,7 +74,7 @@ INSERT INTO `genders` (`id`, `gender`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `level`
+-- Table structure for table `level`
 --
 
 CREATE TABLE `level` (
@@ -83,7 +83,7 @@ CREATE TABLE `level` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `level`
+-- Dumping data for table `level`
 --
 
 INSERT INTO `level` (`id`, `level_name`) VALUES
@@ -93,7 +93,7 @@ INSERT INTO `level` (`id`, `level_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `products`
+-- Table structure for table `products`
 --
 
 CREATE TABLE `products` (
@@ -114,7 +114,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `products`
+-- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`id`, `seller_id`, `name_product`, `price`, `description`, `stock`, `image`, `color`, `rating`, `product_condition`, `size`, `category`, `upload_at`, `brand`) VALUES
@@ -152,7 +152,7 @@ INSERT INTO `products` (`id`, `seller_id`, `name_product`, `price`, `description
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `transaction`
+-- Table structure for table `transaction`
 --
 
 CREATE TABLE `transaction` (
@@ -167,7 +167,7 @@ CREATE TABLE `transaction` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `transaction`
+-- Dumping data for table `transaction`
 --
 
 INSERT INTO `transaction` (`id`, `invoice`, `seller_id`, `customer_id`, `address`, `amount`, `date`, `payment`) VALUES
@@ -203,7 +203,7 @@ INSERT INTO `transaction` (`id`, `invoice`, `seller_id`, `customer_id`, `address
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `trans_item`
+-- Table structure for table `trans_item`
 --
 
 CREATE TABLE `trans_item` (
@@ -216,7 +216,7 @@ CREATE TABLE `trans_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `trans_item`
+-- Dumping data for table `trans_item`
 --
 
 INSERT INTO `trans_item` (`transaction_id`, `product_id`, `qty`, `color`, `size`, `invoice_id`) VALUES
@@ -239,7 +239,7 @@ INSERT INTO `trans_item` (`transaction_id`, `product_id`, `qty`, `color`, `size`
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -252,12 +252,12 @@ CREATE TABLE `users` (
   `image` varchar(255) NOT NULL,
   `store_name` varchar(255) DEFAULT NULL,
   `gender_id` int(11) DEFAULT NULL,
-  `date_of_birth` varchar(255) NOT NULL,
+  `date_of_birth` varchar(255) DEFAULT NULL,
   `desc_store` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id_user`, `level_id`, `username`, `email`, `password`, `phone_number`, `image`, `store_name`, `gender_id`, `date_of_birth`, `desc_store`) VALUES
@@ -286,96 +286,96 @@ INSERT INTO `users` (`id_user`, `level_id`, `username`, `email`, `password`, `ph
 --
 
 --
--- Indeks untuk tabel `address_tb`
+-- Indexes for table `address_tb`
 --
 ALTER TABLE `address_tb`
   ADD PRIMARY KEY (`id_address`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indeks untuk tabel `genders`
+-- Indexes for table `genders`
 --
 ALTER TABLE `genders`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `level`
+-- Indexes for table `level`
 --
 ALTER TABLE `level`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `products`
+-- Indexes for table `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
   ADD KEY `seller_id` (`seller_id`);
 
 --
--- Indeks untuk tabel `transaction`
+-- Indexes for table `transaction`
 --
 ALTER TABLE `transaction`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `trans_item`
+-- Indexes for table `trans_item`
 --
 ALTER TABLE `trans_item`
   ADD KEY `transaction_id` (`transaction_id`),
   ADD KEY `product_id` (`product_id`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `address_tb`
+-- AUTO_INCREMENT for table `address_tb`
 --
 ALTER TABLE `address_tb`
   MODIFY `id_address` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT untuk tabel `genders`
+-- AUTO_INCREMENT for table `genders`
 --
 ALTER TABLE `genders`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `level`
+-- AUTO_INCREMENT for table `level`
 --
 ALTER TABLE `level`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT untuk tabel `products`
+-- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
--- AUTO_INCREMENT untuk tabel `transaction`
+-- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `products`
+-- Constraints for table `products`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`seller_id`) REFERENCES `users` (`id_user`) ON DELETE CASCADE;
