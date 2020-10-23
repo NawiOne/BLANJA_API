@@ -50,7 +50,7 @@ const uploadImg = {
     });
   },
   multipleUpload: (req, res, next) => {
-    const multipleUpload = upload.array('image', 4);
+    const multipleUpload = upload.array('image', 5);
     multipleUpload(req, res, (err) => {
      
       if (err) {
