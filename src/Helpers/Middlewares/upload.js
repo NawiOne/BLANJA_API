@@ -60,7 +60,7 @@ const uploadImg = {
       } else {
         try {
           const image = req.files.map(file =>{
-            return `http://localhost:8000/images/` + file.filename
+            return `http://3.87.168.244:8000/images/` + file.filename
           })
           req.body.image = image.join(',');
         } catch {
